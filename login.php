@@ -5,7 +5,7 @@ session_start();
 $host = "localhost";
 $dbname = "news_portal";
 $username = "root";
-$password = ""; // Change if needed
+$password = ""; // Update if needed
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -14,7 +14,7 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// Handle form
+// Login handling
 $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inputUser = $_POST["username"];
@@ -38,61 +38,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Login</title>
-    <link rel="icon" type="image/png" href="./imgs/pfp.png">
+    <meta charset="UTF-8">
+    <title>Login - Daily News Admin</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2980b9, #6dd5fa);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
+
         .login-box {
-            background: white;
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
-        input[type="text"], input[type="password"] {
+
+        .login-box h2 {
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
             width: 100%;
-            padding: 12px 8px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 10px 0 20px;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-size: 16px;
         }
-        input[type="submit"] {
-            background-color: #007BFF;
+
+        .login-box input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #2980b9;
             color: white;
-            padding: 12px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s;
         }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
+
+        .login-box input[type="submit"]:hover {
+            background: #21618c;
         }
+
         .error {
-            color: red;
-            margin-top: 10px;
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
         }
     </style>
 </head>
 <body>
+
 <div class="login-box">
     <h2>Admin Login</h2>
     <form method="post">
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
         <input type="submit" value="Login">
     </form>
     <?php if ($error): ?>
         <div class="error"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
+    <div class="footer">© 2025 Daily News</div>
 </div>
+
 </body>
 </html>
