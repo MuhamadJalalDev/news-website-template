@@ -1,0 +1,57 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS news_portal;
+USE news_portal;
+
+-- 1. Categories Table
+CREATE TABLE IF NOT EXISTS categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL,
+    category_slug VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+
+-- 2. Articles Table
+CREATE TABLE IF NOT EXISTS articles (
+    article_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+    content TEXT NOT NULL,
+    excerpt VARCHAR(255),
+    image_path VARCHAR(255),
+    category_id INT,
+    status ENUM('published', 'draft') DEFAULT 'draft',
+    published_at TIMESTAMP NULL DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id)
+);
+
+-- 3. Users Table (for admin authentication)
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'editor', 'author') DEFAULT 'author',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert some initial categories
+INSERT INTO categories (category_name, category_slug) VALUES
+('Politics', 'politics'),
+('Technology', 'technology'),
+('Business', 'business'),
+('Sports', 'sports'),
+('Health', 'health'),
+('Entertainment', 'entertainment');
+
+-- Insert a sample admin user (password: admin123 - you should hash this properly in PHP)
+INSERT INTO users (username, email, password_hash, role) VALUES
+('admin', 'admin@newsportal.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
+
+-- Insert some sample articles
+INSERT INTO articles (title, slug, content, excerpt, category_id, status, published_at) VALUES
+('New AI Developments Changing Tech Landscape', 'new-ai-developments', 'Full article content here...', 'Brief excerpt about AI developments...', 2, 'published', NOW()),
+('National Team Wins Championship', 'national-team-wins', 'Full article content here...', 'Brief excerpt about sports victory...', 4, 'published', NOW()),
+('Stock Market Reaches All-Time High', 'stock-market-high', 'Full article content here...', 'Brief excerpt about business news...', 3, 'published', NOW());
+
