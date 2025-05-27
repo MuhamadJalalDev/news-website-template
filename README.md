@@ -5,3 +5,6 @@ note:if you use my database then know that to login to admin.php the username is
 these are some images of the template
 
 ![image alt](https://github.com/MuhamadJalalDev/news-website-template/blob/main/screenshot1.png?raw=true)
+![image alt](https://github.com/MuhamadJalalDev/news-website-template/blob/main/screenshot1.png?raw=true)
+![image alt](https://github.com/MuhamadJalalDev/news-website-template/blob/main/screenshot1.png?raw=true)
+![image alt](https://github.com/MuhamadJalalDev/news-website-template/blob/main/screenshot1.png?raw=true)
